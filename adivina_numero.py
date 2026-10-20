@@ -18,17 +18,19 @@ def get_player_name():
 
 
 def choose_difficulty():
-    print("\nSelecciona una dificultad:")
-    print("1. Fácil (1–20, 8 intentos)")
-    print("2. Medio (1–50, 7 intentos)")
-    print("3. Difícil (1–100, 6 intentos)")
+    difficulty_chosed = False
+    while not difficulty_chosed:
+        print("\nSelecciona una dificultad:")
+        print("1. Fácil (1–20, 8 intentos)")
+        print("2. Medio (1–50, 7 intentos)")
+        print("3. Difícil (1–100, 6 intentos)")
 
-    choice = input("Opción: ").lower()
-    if choice in DIFFICULTIES:
-        return DIFFICULTIES[choice]
-
-    print("Opción inválida. Se usará la dificultad Fácil.")
-    return DIFFICULTIES["2"]
+        choice = input("Opción: ").lower()
+        if choice in DIFFICULTIES:
+            return DIFFICULTIES[choice]
+        print()
+        print("Opción inválida. Seleccione una dificultad dentro del rango 1-3.")
+    
 
 
 def read_guess(minimum, maximum):
@@ -61,17 +63,21 @@ def play_round(settings):
         f"{settings['maximum']}. Tienes {settings['attempts']} intentos."
     )
 
-    while attempts_used <= settings["attempts"] and won is False:
+    while attempts_used < settings["attempts"] and won is False:
         guess = read_guess(settings["minimum"], settings["maximum"])
-        attempts_used += 1
 
         if guess is None:
             continue
         elif guess < settings["minimum"]:
-            print("El número es menor que el rango permitido.")
+            print("El número es menor que el rango permitido. No cuenta como intento.")
+            continue
         elif guess > settings["maximum"]:
-            print("El número es mayor que el rango permitido.")
-        elif guess < secret_number:
+            print("El número es mayor que el rango permitido. No cuenta como intento.")
+            continue
+
+        attempts_used += 1
+
+        if guess < secret_number:
             print("Muy bajo.")
         elif guess > secret_number:
             print("Muy alto.")
@@ -128,10 +134,13 @@ def play_game(scores):
 
 
 def ask_to_play_again():
-    answer = input("\n¿Quieres jugar otra vez? (s/n): ").lower()
-    if answer == "s" or answer == "si" or answer == "sí":
+    answer = input("\n¿Quieres jugar otra vez? (s/n): ").replace(" ", "").lower()
+    if answer in ["s", "si", "sí"]:
         return True
-    return False
+    elif answer in ["n", "no"]:
+        return False
+    print("Respuesta inválida. Escribe 's' para sí o 'n' para no.")
+
 
 
 def main():
