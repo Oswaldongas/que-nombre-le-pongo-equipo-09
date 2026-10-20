@@ -18,17 +18,19 @@ def get_player_name():
 
 
 def choose_difficulty():
-    print("\nSelecciona una dificultad:")
-    print("1. Fácil (1–20, 8 intentos)")
-    print("2. Medio (1–50, 7 intentos)")
-    print("3. Difícil (1–100, 6 intentos)")
+    difficulty_chosed = False
+    while not difficulty_chosed:
+        print("\nSelecciona una dificultad:")
+        print("1. Fácil (1–20, 8 intentos)")
+        print("2. Medio (1–50, 7 intentos)")
+        print("3. Difícil (1–100, 6 intentos)")
 
-    choice = input("Opción: ").lower()
-    if choice in DIFFICULTIES:
-        return DIFFICULTIES[choice]
-
-    print("Opción inválida. Se usará la dificultad Fácil.")
-    return DIFFICULTIES["1"]
+        choice = input("Opción: ").lower()
+        if choice in DIFFICULTIES:
+            return DIFFICULTIES[choice]
+        print()
+        print("Opción inválida. Seleccione una dificultad dentro del rango 1-3.")
+    
 
 
 def read_guess(minimum, maximum):
@@ -131,7 +133,8 @@ def ask_to_play_again():
     answer = input("\n¿Quieres jugar otra vez? (s/n): ").replace(" ", "").lower()
     if answer in ["s", "si", "sí"]:
         return True
-    return False
+    elif answer in ["n", "no"]:
+        return False
 
 
 def main():
