@@ -28,7 +28,7 @@ def choose_difficulty():
         return DIFFICULTIES[choice]
 
     print("Opción inválida. Se usará la dificultad Fácil.")
-    return DIFFICULTIES["2"]
+    return DIFFICULTIES["1"]
 
 
 def read_guess(minimum, maximum):
@@ -128,8 +128,8 @@ def play_game(scores):
 
 
 def ask_to_play_again():
-    answer = input("\n¿Quieres jugar otra vez? (s/n): ").lower()
-    if answer == "s" or answer == "si" or answer == "sí":
+    answer = input("\n¿Quieres jugar otra vez? (s/n): ").replace(" ", "").lower()
+    if answer in ["s", "si", "sí"]:
         return True
     return False
 
