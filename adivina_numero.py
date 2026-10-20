@@ -139,6 +139,8 @@ def ask_to_play_again():
         return True
     elif answer in ["n", "no"]:
         return False
+    print("Respuesta inválida. Escribe 's' para sí o 'n' para no.")
+
 
 
 def main():
